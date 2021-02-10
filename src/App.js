@@ -3,7 +3,7 @@ import "./App.css";
 
 import puzzles from "./puzzles";
 import solutions from "./solutions";
-import valid from "./valid";
+// import valid from "./valid";
 
 function choice(arr) {
   let index = Math.floor(Math.random() * arr.length);
@@ -11,14 +11,17 @@ function choice(arr) {
 }
 
 function App() {
-  let word = choice(choices);
+  let len = choice([3, 4, 5, 6, 7]);
+  let letters = choice(puzzles[len]);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {word}
+        LEN: {len}
         <br />
-        VALID: {valid[word]}
+        {letters}
+        <br />
+        SOLUTION: {choice(solutions[letters])}
       </header>
     </div>
   );
