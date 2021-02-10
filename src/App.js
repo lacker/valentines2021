@@ -1,7 +1,8 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-import choices from "./choices";
+import puzzles from "./puzzles";
+import solutions from "./solutions";
 import valid from "./valid";
 
 function choice(arr) {

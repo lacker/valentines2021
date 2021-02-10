@@ -23,6 +23,19 @@ function saveJSON(fname, data) {
   fs.writeFileSync(`${__dirname}/../src/${fname}`, content);
 }
 
+function uniqueLetters(word) {
+  let letterSet = {};
+  for (let letter of word) {
+    letterSet[letter] = 1;
+  }
+  let letters = [];
+  for (let letter in letterSet) {
+    letters.push(letter);
+  }
+  letters.sort();
+  return letters.join("");
+}
+
 async function main() {
   let collins = await loadText("collins2019.txt");
   let common = await loadText("google10k.txt");
@@ -34,15 +47,35 @@ async function main() {
   saveJSON("valid.js", valid);
   console.log(`wrote ${collins.length} valid words`);
 
-  let choices = [];
+  // Maps sets of letters to words that they can form using all letters
+  let solutions = {};
+  let count = 0;
   for (let word of common) {
     if (!valid[word]) {
       continue;
     }
-    choices.push(word);
+    count += 1;
+    let unique = uniqueLetters(word);
+    if (!solutions[unique]) {
+      solutions[unique] = [word];
+    } else {
+      solutions[unique].push(word);
+    }
   }
-  saveJSON("choices.js", choices);
-  console.log(`wrote ${choices.length} puzzle choices`);
+  saveJSON("solutions.js", solutions);
+  console.log(`wrote ${count} solutions`);
+
+  // Key solutions by the length of the puzzle
+  let puzzles = {};
+  for (let unique in solutions) {
+    if (!puzzles[unique.length]) {
+      puzzles[unique.length] = [unique];
+    } else {
+      puzzles[unique.length].push(unique);
+    }
+  }
+  saveJSON("puzzles.js", puzzles);
+  console.log(`wrote puzzles for lengths ${Object.keys(puzzles)}`);
 }
 
 main();
