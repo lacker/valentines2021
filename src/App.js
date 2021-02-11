@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import puzzles from "./puzzles";
 import solutions from "./solutions";
@@ -45,6 +45,9 @@ let ImageButton = ({ alt, image, onClick }) => {
   );
 };
 
+let MIN_LENGTH = 3;
+let MAX_LENGTH = 7;
+
 function App() {
   useEffect(() => {
     let letters = Array.from("VALTINE");
@@ -52,10 +55,19 @@ function App() {
     document.title = letters.join("");
   }, []);
 
-  let len = choice([3, 4, 5, 6, 7]);
-  let letterString = choice(puzzles[len]);
-  let solution = choice(solutions[letterString]).toUpperCase();
-  let letters = Array.from(letterString.toUpperCase());
+  let [length, setLength] = useState(MIN_LENGTH);
+  let [solution, setSolution] = useState("");
+  let [letters, setLetters] = useState([]);
+
+  if (letters.length == 0) {
+    // We need to initialize a new puzzle for this length
+    let letterString = choice(puzzles[length]);
+    let newSolution = choice(solutions[letterString]).toUpperCase();
+    let newLetters = Array.from(letterString.toUpperCase());
+    setSolution(newSolution);
+    setLetters(newLetters);
+    return null;
+  }
 
   let select = letter => {
     console.log("selected", letter);
