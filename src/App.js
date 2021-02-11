@@ -59,13 +59,26 @@ function App() {
   let [solution, setSolution] = useState("");
   let [letters, setLetters] = useState([]);
 
-  if (letters.length === 0) {
-    // We need to initialize a new puzzle for this length
-    let letterString = choice(puzzles[length]);
+  let newGame = newLength => {
+    if (newLength < MIN_LENGTH) {
+      newLength = MIN_LENGTH;
+    }
+    if (newLength > MAX_LENGTH) {
+      newLength = MAX_LENGTH;
+    }
+
+    let letterString = choice(puzzles[newLength]);
     let newSolution = choice(solutions[letterString]).toUpperCase();
     let newLetters = Array.from(letterString.toUpperCase());
+    shuffleArray(newLetters);
+
+    setLength(newLength);
     setSolution(newSolution);
     setLetters(newLetters);
+  };
+
+  if (letters.length === 0) {
+    newGame(length);
     return null;
   }
 
