@@ -59,7 +59,7 @@ function App() {
   let [solution, setSolution] = useState("");
   let [letters, setLetters] = useState([]);
 
-  if (letters.length == 0) {
+  if (letters.length === 0) {
     // We need to initialize a new puzzle for this length
     let letterString = choice(puzzles[length]);
     let newSolution = choice(solutions[letterString]).toUpperCase();
