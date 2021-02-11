@@ -20,7 +20,14 @@ function shuffleArray(array) {
 
 let LetterButton = ({ letter, onClick }) => {
   return (
-    <button key={letter} onClick={onClick}>
+    <button
+      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl"
+      key={letter}
+      onClick={e => {
+        e.target.blur();
+        onClick();
+      }}
+    >
       {letter}
     </button>
   );
