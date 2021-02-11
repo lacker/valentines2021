@@ -18,6 +18,14 @@ function shuffleArray(array) {
   }
 }
 
+let LetterButton = ({ letter, onClick }) => {
+  return (
+    <button key={letter} onClick={onClick}>
+      {letter}
+    </button>
+  );
+};
+
 function App() {
   useEffect(() => {
     let letters = Array.from("VALTINE");
@@ -26,14 +34,24 @@ function App() {
   }, []);
 
   let len = choice([3, 4, 5, 6, 7]);
-  let letters = choice(puzzles[len]);
-  let solution = choice(solutions[letters]).toUpperCase();
+  let letterString = choice(puzzles[len]);
+  let solution = choice(solutions[letterString]).toUpperCase();
+  let letters = Array.from(letterString.toUpperCase());
+
+  let select = letter => {
+    console.log("selected", letter);
+  };
+
   return (
     <div className="h-screen v-screen flex flex-col">
       <div className="flex-1 flex justify-center items-center">
         <div className="text-5xl">{solution}</div>
       </div>
-      <div className="flex-1">{letters.toUpperCase()}</div>
+      <div className="flex-1 flex justify-center items-center">
+        {letters.map(letter =>
+          LetterButton({ letter, onClick: () => select(letter) })
+        )}
+      </div>
       <div className="flex-1">shuffle / backspace / submit</div>
     </div>
   );
