@@ -27,11 +27,14 @@ function App() {
 
   let len = choice([3, 4, 5, 6, 7]);
   let letters = choice(puzzles[len]);
+  let solution = choice(solutions[letters]).toUpperCase();
   return (
     <div className="h-screen v-screen flex flex-col">
-      <div className="flex-1">LEN: {len}</div>
-      <div className="flex-1">{letters}</div>
-      <div className="flex-1">SOLUTION: {choice(solutions[letters])}</div>
+      <div className="flex-1 flex justify-center items-center">
+        <div className="text-5xl">{solution}</div>
+      </div>
+      <div className="flex-1">{letters.toUpperCase()}</div>
+      <div className="flex-1">shuffle / backspace / submit</div>
     </div>
   );
 }
