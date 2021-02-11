@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 import puzzles from "./puzzles";
 import solutions from "./solutions";
 
+import backspace from "./backspace.png";
+import shuffle from "./shuffle.png";
+
 function choice(arr) {
   let index = Math.floor(Math.random() * arr.length);
   return arr[index];
@@ -21,14 +24,23 @@ function shuffleArray(array) {
 let LetterButton = ({ letter, onClick }) => {
   return (
     <button
-      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl"
+      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl focus:outline-none"
       key={letter}
-      onClick={e => {
-        e.target.blur();
-        onClick();
-      }}
+      onClick={onClick}
     >
       {letter}
+    </button>
+  );
+};
+
+let ImageButton = ({ alt, image, onClick }) => {
+  return (
+    <button
+      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl focus:outline-none"
+      key={alt}
+      onClick={onClick}
+    >
+      <img src={image} alt={alt} />
     </button>
   );
 };
@@ -59,7 +71,28 @@ function App() {
           LetterButton({ letter, onClick: () => select(letter) })
         )}
       </div>
-      <div className="flex-1">shuffle / backspace / submit</div>
+      <div className="flex-1 flex justify-center items-center">
+        <ImageButton
+          alt="shuffle"
+          image={shuffle}
+          onClick={() => {
+            console.log("shuffle");
+          }}
+        />
+        <ImageButton
+          alt="backspace"
+          image={backspace}
+          onClick={() => {
+            console.log("backspace");
+          }}
+        />
+        <LetterButton
+          letter="✓"
+          onClick={() => {
+            console.log("ok");
+          }}
+        />
+      </div>
     </div>
   );
 }
