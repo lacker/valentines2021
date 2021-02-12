@@ -24,7 +24,7 @@ function shuffleArray(array) {
 let LetterButton = ({ letter, onClick }) => {
   return (
     <button
-      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl focus:outline-none"
+      className="h-20 w-20 m-2 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
       key={letter}
       onClick={onClick}
     >
@@ -36,7 +36,7 @@ let LetterButton = ({ letter, onClick }) => {
 let ImageButton = ({ alt, image, onClick }) => {
   return (
     <button
-      className="h-20 w-20 m-2 px-5 border border-black rounded-lg text-5xl focus:outline-none"
+      className="h-20 w-20 m-2 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
       key={alt}
       onClick={onClick}
     >
@@ -102,6 +102,11 @@ function App() {
           image={shuffle}
           onClick={() => {
             console.log("shuffle");
+            let newLetters = Array.from(letters);
+            while (letters.join() === newLetters.join()) {
+              shuffleArray(newLetters);
+            }
+            setLetters(newLetters);
           }}
         />
         <ImageButton
