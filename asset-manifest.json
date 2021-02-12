@@ -1,26 +1,22 @@
 {
   "files": {
     "main.css": "/valentines2021/static/css/main.27476fa5.chunk.css",
-    "main.js": "/valentines2021/static/js/main.050b6955.chunk.js",
-    "main.js.map": "/valentines2021/static/js/main.050b6955.chunk.js.map",
-    "runtime-main.js": "/valentines2021/static/js/runtime-main.8e0a39e4.js",
-    "runtime-main.js.map": "/valentines2021/static/js/runtime-main.8e0a39e4.js.map",
-    "static/js/2.bc3a0c48.chunk.js": "/valentines2021/static/js/2.bc3a0c48.chunk.js",
-    "static/js/2.bc3a0c48.chunk.js.map": "/valentines2021/static/js/2.bc3a0c48.chunk.js.map",
-    "static/js/3.d0934202.chunk.js": "/valentines2021/static/js/3.d0934202.chunk.js",
-    "static/js/3.d0934202.chunk.js.map": "/valentines2021/static/js/3.d0934202.chunk.js.map",
-    "static/js/4.3a025201.chunk.js": "/valentines2021/static/js/4.3a025201.chunk.js",
-    "static/js/4.3a025201.chunk.js.map": "/valentines2021/static/js/4.3a025201.chunk.js.map",
+    "main.js": "/valentines2021/static/js/main.d40aeb53.chunk.js",
+    "main.js.map": "/valentines2021/static/js/main.d40aeb53.chunk.js.map",
+    "runtime-main.js": "/valentines2021/static/js/runtime-main.7f5a8221.js",
+    "runtime-main.js.map": "/valentines2021/static/js/runtime-main.7f5a8221.js.map",
+    "static/js/2.d2098bad.chunk.js": "/valentines2021/static/js/2.d2098bad.chunk.js",
+    "static/js/2.d2098bad.chunk.js.map": "/valentines2021/static/js/2.d2098bad.chunk.js.map",
+    "static/js/3.14c76299.chunk.js": "/valentines2021/static/js/3.14c76299.chunk.js",
+    "static/js/3.14c76299.chunk.js.map": "/valentines2021/static/js/3.14c76299.chunk.js.map",
     "index.html": "/valentines2021/index.html",
     "static/css/main.27476fa5.chunk.css.map": "/valentines2021/static/css/main.27476fa5.chunk.css.map",
-    "static/js/2.bc3a0c48.chunk.js.LICENSE.txt": "/valentines2021/static/js/2.bc3a0c48.chunk.js.LICENSE.txt",
-    "static/js/3.d0934202.chunk.js.LICENSE.txt": "/valentines2021/static/js/3.d0934202.chunk.js.LICENSE.txt",
-    "static/media/yay.bfc5417d.mp3": "/valentines2021/static/media/yay.bfc5417d.mp3"
+    "static/js/2.d2098bad.chunk.js.LICENSE.txt": "/valentines2021/static/js/2.d2098bad.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.8e0a39e4.js",
-    "static/js/2.bc3a0c48.chunk.js",
+    "static/js/runtime-main.7f5a8221.js",
+    "static/js/2.d2098bad.chunk.js",
     "static/css/main.27476fa5.chunk.css",
-    "static/js/main.050b6955.chunk.js"
+    "static/js/main.d40aeb53.chunk.js"
   ]
 }
