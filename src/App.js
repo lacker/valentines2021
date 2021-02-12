@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import CHECKER from "./checker";
 import PUZZLES from "./puzzles";
 import SOLUTIONS from "./solutions";
-import VALID from "./valid";
 
 import backspace from "./backspace.png";
 import shuffle from "./shuffle.png";
@@ -187,7 +187,7 @@ function App() {
           <LetterButton
             letter="✓"
             onClick={() => {
-              if (VALID[partial.toLowerCase()]) {
+              if (CHECKER[partial.toLowerCase()]) {
                 let deltaScore = Math.max(1, letters.length - hint.length);
                 let newScore = score + deltaScore;
                 setScore(newScore);
