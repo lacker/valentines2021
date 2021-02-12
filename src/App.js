@@ -209,7 +209,7 @@ function App() {
                 setScore(newScore);
 
                 let sound = new Howl({
-                  src: ["/valentines2021/yay.mp3"]
+                  src: [process.env.PUBLIC_URL + "/yay.mp3"]
                 });
                 sound.play();
 
