@@ -45,7 +45,7 @@ function shuffleArray(array) {
 let LetterButton = ({ letter, onClick }) => {
   return (
     <button
-      className="h-20 w-20 m-2 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
+      className="h-20 w-20 m-1 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
       key={letter}
       onClick={onClick}
     >
@@ -57,12 +57,32 @@ let LetterButton = ({ letter, onClick }) => {
 let ImageButton = ({ alt, image, onClick }) => {
   return (
     <button
-      className="h-20 w-20 m-2 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
+      className="h-20 w-20 m-1 px-5 border shadow-md border-black rounded-lg text-5xl focus:outline-none"
       key={alt}
       onClick={onClick}
     >
       <img src={image} alt={alt} />
     </button>
+  );
+};
+
+let LetterBar = ({ letters, select }) => {
+  let mid = Math.ceil(letters.length / 2);
+  let firstHalf = letters.slice(0, mid);
+  let secondHalf = letters.slice(mid);
+  return (
+    <div className="flex-1 flex flex-col justify-center items-center">
+      <div className="flex justify-center items-center">
+        {firstHalf.map(letter =>
+          LetterButton({ letter, onClick: () => select(letter) })
+        )}
+      </div>
+      <div className="flex justify-center items-center">
+        {secondHalf.map(letter =>
+          LetterButton({ letter, onClick: () => select(letter) })
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -157,11 +177,7 @@ function App() {
         <div className="flex-1 flex justify-center items-center">
           <div className="text-5xl">{partial}</div>
         </div>
-        <div className="flex-1 flex justify-center items-center">
-          {letters.map(letter =>
-            LetterButton({ letter, onClick: () => select(letter) })
-          )}
-        </div>
+        <LetterBar letters={letters} select={select} />
         <div className="flex-1 flex justify-center items-center">
           <ImageButton
             alt="shuffle"
