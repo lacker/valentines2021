@@ -79,6 +79,7 @@ function App() {
   let [score, setScore] = useState(0);
   let [hint, setHint] = useState("");
   let [ticks, setTicks] = useState(0);
+  let [puzzleNumber, setPuzzleNumber] = useState(0);
 
   useEffect(() => {
     let letters = Array.from("VALTINE");
@@ -98,7 +99,7 @@ function App() {
     }
   }, 100);
 
-  let newPuzzle = newLength => {
+  let newPuzzle = (num, newLength) => {
     if (newLength < MIN_LENGTH) {
       newLength = MIN_LENGTH;
     }
@@ -118,6 +119,7 @@ function App() {
     setPartial("");
     setHint("");
     setTicks(0);
+    setPuzzleNumber(num);
   };
 
   if (message.length > 0) {
@@ -126,7 +128,8 @@ function App() {
         className="h-screen w-screen flex justify-center items-center focus:outline-none"
         onClick={() => {
           console.log("onclick");
-          newPuzzle(MIN_LENGTH);
+          setScore(0);
+          newPuzzle(1, MIN_LENGTH);
         }}
       >
         {message}
@@ -135,8 +138,7 @@ function App() {
   }
 
   if (letters.length === 0) {
-    newPuzzle(length);
-    return null;
+    return <div>{"loading..."}</div>;
   }
 
   let select = letter => {
@@ -186,18 +188,24 @@ function App() {
             letter="✓"
             onClick={() => {
               if (VALID[partial.toLowerCase()]) {
-                if (hint.length === 0) {
+                let deltaScore = Math.max(1, letters.length - hint.length);
+                let newScore = score + deltaScore;
+                setScore(newScore);
+
+                if (puzzleNumber >= 10) {
+                  setMessage(
+                    `your score was ${newScore}. tap anywhere to play again!`
+                  );
+                } else if (hint.length === 0) {
                   console.log("good work");
-                  newPuzzle(length + 1);
+                  newPuzzle(puzzleNumber + 1, length + 1);
                 } else if (hint.length === 1) {
                   console.log("you did have a hint");
-                  newPuzzle(length);
+                  newPuzzle(puzzleNumber + 1, length);
                 } else {
                   console.log("you did have multiple hints");
-                  newPuzzle(length - 1);
+                  newPuzzle(puzzleNumber + 1, length - 1);
                 }
-                let deltaScore = Math.max(1, letters.length - hint.length);
-                setScore(score + deltaScore);
               } else {
                 console.log("not a word");
                 setPartial("");
