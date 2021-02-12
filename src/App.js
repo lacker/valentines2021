@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import useSound from "use-sound";
 
 import PUZZLES from "./puzzles";
 import SOLUTIONS from "./solutions";
 
 import backspace from "./backspace.png";
 import shuffle from "./shuffle.png";
-
-import yay from "./sounds/yay.mp3";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -102,8 +99,6 @@ function App() {
   let [hint, setHint] = useState("");
   let [ticks, setTicks] = useState(0);
   let [puzzleNumber, setPuzzleNumber] = useState(0);
-
-  let [playYay] = useSound(yay);
 
   useEffect(() => {
     let letters = Array.from("VALTINE");
@@ -218,7 +213,9 @@ function App() {
                   );
                 } else if (hint.length === 0) {
                   console.log("good work");
-                  playYay();
+                  let sound = new Audio();
+                  sound.src = "./valentines2021/yay.mp3";
+                  sound.play();
                   newPuzzle(puzzleNumber + 1, length + 1);
                 } else if (hint.length === 1) {
                   console.log("you did have a hint");
