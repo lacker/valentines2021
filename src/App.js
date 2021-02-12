@@ -146,7 +146,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen">
+    <div style={{ height: "90vh" }}>
       <div className="h-full flex flex-col">
         <div className="flex-none relative p-2">
           <span className="absolute left-2">
