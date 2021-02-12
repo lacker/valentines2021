@@ -58,6 +58,7 @@ function App() {
   let [length, setLength] = useState(MIN_LENGTH);
   let [solution, setSolution] = useState("");
   let [letters, setLetters] = useState([]);
+  let [partial, setPartial] = useState("");
 
   let newGame = newLength => {
     if (newLength < MIN_LENGTH) {
@@ -75,6 +76,7 @@ function App() {
     setLength(newLength);
     setSolution(newSolution);
     setLetters(newLetters);
+    setPartial("");
   };
 
   if (letters.length === 0) {
@@ -84,12 +86,13 @@ function App() {
 
   let select = letter => {
     console.log("selected", letter);
+    setPartial(partial + letter);
   };
 
   return (
     <div className="h-screen v-screen flex flex-col">
       <div className="flex-1 flex justify-center items-center">
-        <div className="text-5xl">{solution}</div>
+        <div className="text-5xl">{partial}</div>
       </div>
       <div className="flex-1 flex justify-center items-center">
         {letters.map(letter =>
@@ -114,6 +117,7 @@ function App() {
           image={backspace}
           onClick={() => {
             console.log("backspace");
+            setPartial(partial.slice(0, -1));
           }}
         />
         <LetterButton
