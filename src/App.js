@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Howl } from "howler";
 
 import PUZZLES from "./puzzles";
 import SOLUTIONS from "./solutions";
@@ -207,15 +208,17 @@ function App() {
                 let newScore = score + deltaScore;
                 setScore(newScore);
 
+                let sound = new Howl({
+                  src: ["/valentines2021/yay.mp3"]
+                });
+                sound.play();
+
                 if (puzzleNumber >= 10) {
                   setMessage(
                     `your score was ${newScore}. tap anywhere to play again!`
                   );
                 } else if (hint.length === 0) {
                   console.log("good work");
-                  let sound = new Audio();
-                  sound.src = "./valentines2021/yay.mp3";
-                  sound.play();
                   newPuzzle(puzzleNumber + 1, length + 1);
                 } else if (hint.length === 1) {
                   console.log("you did have a hint");
