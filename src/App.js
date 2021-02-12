@@ -1,10 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import puzzles from "./puzzles";
-import solutions from "./solutions";
+import PUZZLES from "./puzzles";
+import SOLUTIONS from "./solutions";
+import VALID from "./valid";
 
 import backspace from "./backspace.png";
 import shuffle from "./shuffle.png";
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => window.clearInterval(id);
+    }
+    return null;
+  }, [delay]);
+}
 
 function choice(arr) {
   let index = Math.floor(Math.random() * arr.length);
@@ -49,18 +71,32 @@ let MIN_LENGTH = 3;
 let MAX_LENGTH = 7;
 
 function App() {
-  useEffect(() => {
-    let letters = Array.from("VALTINE");
-    shuffleArray(letters);
-    document.title = letters.join("");
-  }, []);
-
+  let [message, setMessage] = useState("");
   let [length, setLength] = useState(MIN_LENGTH);
   let [solution, setSolution] = useState("");
   let [letters, setLetters] = useState([]);
   let [partial, setPartial] = useState("");
   let [score, setScore] = useState(0);
   let [hint, setHint] = useState("");
+  let [ticks, setTicks] = useState(0);
+
+  useEffect(() => {
+    let letters = Array.from("VALTINE");
+    shuffleArray(letters);
+    let name = letters.join("");
+    document.title = name;
+    setMessage(`welcome to ${name}. tap anywhere to play`);
+  }, []);
+
+  useInterval(() => {
+    let newTicks = ticks + 1;
+    setTicks(newTicks);
+    if (newTicks % 150 === 0 && hint.length < solution.length) {
+      console.log("have a hint");
+      // Extend the hint
+      setHint(solution.slice(0, hint.length + 1));
+    }
+  }, 100);
 
   let newPuzzle = newLength => {
     if (newLength < MIN_LENGTH) {
@@ -70,17 +106,33 @@ function App() {
       newLength = MAX_LENGTH;
     }
 
-    let letterString = choice(puzzles[newLength]);
-    let newSolution = choice(solutions[letterString]).toUpperCase();
+    let letterString = choice(PUZZLES[newLength]);
+    let newSolution = choice(SOLUTIONS[letterString]).toUpperCase();
     let newLetters = Array.from(letterString.toUpperCase());
     shuffleArray(newLetters);
 
+    setMessage("");
     setLength(newLength);
     setSolution(newSolution);
     setLetters(newLetters);
     setPartial("");
     setHint("");
+    setTicks(0);
   };
+
+  if (message.length > 0) {
+    return (
+      <button
+        className="h-screen w-screen flex justify-center items-center focus:outline-none"
+        onClick={() => {
+          console.log("onclick");
+          newPuzzle(MIN_LENGTH);
+        }}
+      >
+        {message}
+      </button>
+    );
+  }
 
   if (letters.length === 0) {
     newPuzzle(length);
@@ -93,14 +145,14 @@ function App() {
   };
 
   return (
-    <div>
-      <div className="relative p-2">
-        <span className="absolute left-2">
-          {hint.length === 0 ? null : "hint: " + hint}
-        </span>
-        <span className="absolute right-2">{"score: " + score}</span>
-      </div>
-      <div className="h-screen flex flex-col">
+    <div className="h-screen">
+      <div className="h-full flex flex-col">
+        <div className="flex-none relative p-2">
+          <span className="absolute left-2">
+            {hint.length === 0 ? null : "hint: " + hint}
+          </span>
+          <span className="absolute right-2">{"score: " + score}</span>
+        </div>
         <div className="flex-1 flex justify-center items-center">
           <div className="text-5xl">{partial}</div>
         </div>
@@ -133,7 +185,23 @@ function App() {
           <LetterButton
             letter="✓"
             onClick={() => {
-              console.log("ok");
+              if (VALID[partial.toLowerCase()]) {
+                if (hint.length === 0) {
+                  console.log("good work");
+                  newPuzzle(length + 1);
+                } else if (hint.length === 1) {
+                  console.log("you did have a hint");
+                  newPuzzle(length);
+                } else {
+                  console.log("you did have multiple hints");
+                  newPuzzle(length - 1);
+                }
+                let deltaScore = Math.max(1, letters.length - hint.length);
+                setScore(score + deltaScore);
+              } else {
+                console.log("not a word");
+                setPartial("");
+              }
             }}
           />
         </div>
