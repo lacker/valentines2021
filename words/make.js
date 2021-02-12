@@ -40,6 +40,7 @@ async function main() {
   let collins = await loadText("collins2019.txt");
   let common = await loadText("google10k.txt");
 
+  // All valid words
   let valid = {};
   for (let word of collins) {
     valid[word] = 1;
@@ -64,6 +65,19 @@ async function main() {
   }
   saveJSON("solutions.js", solutions);
   console.log(`wrote ${count} solutions`);
+
+  // The valid words that could be a solution to some puzzle
+  let checker = {};
+  let cCount = 0;
+  for (let word in valid) {
+    let u = uniqueLetters(word);
+    if (u.length >= 3 && u.length <= 7) {
+      cCount += 1;
+      checker[word] = 1;
+    }
+  }
+  saveJSON("checker.js", checker);
+  console.log(`wrote ${cCount} words to the checker`);
 
   // Key solutions by the length of the puzzle
   let puzzles = {};
