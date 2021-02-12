@@ -59,8 +59,10 @@ function App() {
   let [solution, setSolution] = useState("");
   let [letters, setLetters] = useState([]);
   let [partial, setPartial] = useState("");
+  let [score, setScore] = useState(0);
+  let [hint, setHint] = useState("");
 
-  let newGame = newLength => {
+  let newPuzzle = newLength => {
     if (newLength < MIN_LENGTH) {
       newLength = MIN_LENGTH;
     }
@@ -77,10 +79,11 @@ function App() {
     setSolution(newSolution);
     setLetters(newLetters);
     setPartial("");
+    setHint("");
   };
 
   if (letters.length === 0) {
-    newGame(length);
+    newPuzzle(length);
     return null;
   }
 
@@ -90,42 +93,50 @@ function App() {
   };
 
   return (
-    <div className="h-screen v-screen flex flex-col">
-      <div className="flex-1 flex justify-center items-center">
-        <div className="text-5xl">{partial}</div>
+    <div>
+      <div className="relative p-2">
+        <span className="absolute left-2">
+          {hint.length === 0 ? null : "hint: " + hint}
+        </span>
+        <span className="absolute right-2">{"score: " + score}</span>
       </div>
-      <div className="flex-1 flex justify-center items-center">
-        {letters.map(letter =>
-          LetterButton({ letter, onClick: () => select(letter) })
-        )}
-      </div>
-      <div className="flex-1 flex justify-center items-center">
-        <ImageButton
-          alt="shuffle"
-          image={shuffle}
-          onClick={() => {
-            console.log("shuffle");
-            let newLetters = Array.from(letters);
-            while (letters.join() === newLetters.join()) {
-              shuffleArray(newLetters);
-            }
-            setLetters(newLetters);
-          }}
-        />
-        <ImageButton
-          alt="backspace"
-          image={backspace}
-          onClick={() => {
-            console.log("backspace");
-            setPartial(partial.slice(0, -1));
-          }}
-        />
-        <LetterButton
-          letter="✓"
-          onClick={() => {
-            console.log("ok");
-          }}
-        />
+      <div className="h-screen flex flex-col">
+        <div className="flex-1 flex justify-center items-center">
+          <div className="text-5xl">{partial}</div>
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+          {letters.map(letter =>
+            LetterButton({ letter, onClick: () => select(letter) })
+          )}
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+          <ImageButton
+            alt="shuffle"
+            image={shuffle}
+            onClick={() => {
+              console.log("shuffle");
+              let newLetters = Array.from(letters);
+              while (letters.join() === newLetters.join()) {
+                shuffleArray(newLetters);
+              }
+              setLetters(newLetters);
+            }}
+          />
+          <ImageButton
+            alt="backspace"
+            image={backspace}
+            onClick={() => {
+              console.log("backspace");
+              setPartial(partial.slice(0, -1));
+            }}
+          />
+          <LetterButton
+            letter="✓"
+            onClick={() => {
+              console.log("ok");
+            }}
+          />
+        </div>
       </div>
     </div>
   );
