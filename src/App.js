@@ -87,6 +87,13 @@ let LetterBar = ({ letters, select }) => {
   );
 };
 
+function playSound(name) {
+  let sound = new Howl({
+    src: [process.env.PUBLIC_URL + "/" + name + ".mp3"]
+  });
+  sound.play();
+}
+
 let MIN_LENGTH = 3;
 let MAX_LENGTH = 7;
 
@@ -208,10 +215,15 @@ function App() {
                 let newScore = score + deltaScore;
                 setScore(newScore);
 
-                let sound = new Howl({
-                  src: [process.env.PUBLIC_URL + "/yay.mp3"]
-                });
-                sound.play();
+                let yay = choice([
+                  "yay",
+                  "leoyay1",
+                  "leoyay2",
+                  "leoyay3",
+                  "alexyay",
+                  "zoeyay"
+                ]);
+                playSound(yay);
 
                 if (puzzleNumber >= 10) {
                   setMessage(
@@ -229,6 +241,8 @@ function App() {
                 }
               } else {
                 console.log("not a word");
+                let nay = choice(["alexno", "zoeno"]);
+                playSound(nay);
                 setPartial("");
               }
             }}
